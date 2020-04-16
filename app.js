@@ -6,14 +6,13 @@ app.use(express.json());
 
 app.use('/', express.static(__dirname + '/public'));
 
-db.sync()
-    .then(() => {
-        app.listen(1998)
-        console.log("Server started")
-    })
-    .catch((err) => {
-        console.error(err)
-    })
+app.set( 'port', ( process.env.PORT || 5000 ));
+
+db.sync().then(
+    () => app.listen(app.get( 'port' ))
+    ).catch(
+      (err) => console.error(err)
+    );
 
     app.get('/todo/:id', (req, res) => { 
         var id = req.params.id;
